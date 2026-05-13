@@ -4,7 +4,7 @@ const APP_SETTINGS = {
   // ★★★ ここにCloud FunctionsのURLを設定してください ★★★
   CLOUD_FUNCTION_URL: 'https://report-gqacqvfgfa-an.a.run.app',
   // ★★★ ここにLIFF IDを設定してください ★★★
-  LIFF_ID: '2008161427-jAeXYzdQ',
+  LIFF_ID: '2010069743-9xjV32rf',
 
   MAX_RETRY_ATTEMPTS: 3,
   RETRY_DELAY: 1000,
