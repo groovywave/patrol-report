@@ -2,7 +2,7 @@
 // ▼▼▼【重要】設定値を更新してください ▼▼▼
 const APP_SETTINGS = {
   // ★★★ ここにCloud FunctionsのURLを設定してください ★★★
-  CLOUD_FUNCTION_URL: 'https://report-gqacqvfgfa-an.a.run.app',
+  CLOUD_FUNCTION_URL: 'https://asia-northeast1-patrol-reports-51501.cloudfunctions.net/report',
   // ★★★ ここにLIFF IDを設定してください ★★★
   LIFF_ID: '2010069743-9xjV32rf',
 
@@ -27,21 +27,8 @@ let elements = {};
 
 document.addEventListener('DOMContentLoaded', async function () {
   try {
-    // 1. 環境依存の設定値を取得（無ければデフォルトで続行）
-    let envConfig = {};
-    try {
-      const response = await fetch('/api/config', { cache: 'no-store' });
-      if (response.ok) {
-        envConfig = await response.json();
-      } else {
-        console.warn(`設定エンドポイントが見つかりませんでした: ${response.status} ${response.statusText} - デフォルト設定で起動します。`);
-      }
-    } catch (e) {
-      console.warn('設定エンドポイントの取得に失敗しました（オフライン/ローカル想定）: デフォルト設定で起動します。', e);
-    }
-
-    // 2. 固定的な設定値とマージして、最終的なCONFIGオブジェクトを完成させる。
-    CONFIG = { ...APP_SETTINGS, ...envConfig };
+    // 設定値をAPP_SETTINGSから直接読み込む（外部取得を廃止してシンプル化）
+    CONFIG = { ...APP_SETTINGS };
     console.log('アプリケーション設定が完了しました。：', CONFIG);
 
     // 要素の取得
@@ -631,7 +618,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         method: 'POST',
         body: JSON.stringify(payload),
         headers: { 'Content-Type': 'application/json' },
-        // mode: 'cors', // Cloud FunctionsはCORS対応が必要
+        mode: 'cors', // Cloud FunctionsはCORS対応が必要
         signal: controller.signal
       });
       clearTimeout(timeoutId);
