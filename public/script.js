@@ -9,7 +9,7 @@ const APP_SETTINGS = {
   MAX_RETRY_ATTEMPTS: 3,
   RETRY_DELAY: 1000,
   REQUEST_TIMEOUT: 30000,
-  MAX_FILE_SIZE: 5 * 1024 * 1024,
+  MAX_FILE_SIZE: 10 * 1024 * 1024,
   ALLOWED_FILE_TYPES: ['image/jpeg', 'image/png', 'image/gif', 'image/webp'],
   DETAILS_MAX_LENGTH: 100
 };
@@ -485,7 +485,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
       // 元ファイルサイズのチェックはそのまま活かす
       if (file.size > CONFIG.MAX_FILE_SIZE) {
-        showNotification('ファイルサイズが大きすぎます。5MB以下のファイルを選択してください。', 'error');
+        showNotification('ファイルサイズが大きすぎます。10MB以下のファイルを選択してください。', 'error');
         updatePhoto(null, null, type, elements);
         return;
       }
