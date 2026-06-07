@@ -533,9 +533,24 @@ document.addEventListener('DOMContentLoaded', async function () {
 
       // 成功処理
       showNotification('通報を受け付けました。ご協力ありがとうございます。', 'success');
+
+      // ボタンの表示テキストを「通報ありがとうございました」に変更し固定する
+      elements.btnSubmit.dataset.success = 'true';
+      elements.btnSubmit.disabled = true;
+      elements.btnSubmit.textContent = '通報ありがとうございました';
+
       elements.form.reset();
       updatePhoto(null, null, 'distant', elements);
       updatePhoto(null, null, 'close', elements);
+
+      // 2秒後に初期状態に戻し、ウィンドウを閉じる
+      setTimeout(() => {
+        delete elements.btnSubmit.dataset.success;
+        updateSubmitButtonState();
+
+        console.log('window.close() を実行します。');
+        window.close();
+      }, 2000);
 
     } catch (error) {
       console.error('送信エラー:', error);
@@ -666,6 +681,14 @@ document.addEventListener('DOMContentLoaded', async function () {
   // 送信ボタンの活性/非活性とテキストを更新
   function updateSubmitButtonState() {
     if (!elements?.form || !elements?.btnSubmit) return;
+
+    // 送信成功表示中はボタン状態を「通報ありがとうございました」のままロックする
+    if (elements.btnSubmit.dataset.success === 'true') {
+      elements.btnSubmit.disabled = true;
+      elements.btnSubmit.textContent = '通報ありがとうございました';
+      return;
+    }
+
     // 送信中は一律で制御しない
     if (elements.loader?.classList.contains('sending')) return;
 
